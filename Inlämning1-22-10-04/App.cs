@@ -15,28 +15,32 @@ namespace Inlämning1_22_10_04
     {
         public void Run()
         {
-            
             //• Programmet ska välja olika slumptal varje gång genom att använd klassen Random.
             //• Skriver användaren in något som inte är ett tal ska de få uppmaningen att försöka igen tills de
             //skriver in ett tal med siffror. Tips! Använd metoden TryParse() för att testa om texten som
             //skrivits in verkligen är ett tal.
             //• Programmet ska bara räkna gissningar som är heltal. I exemplet ovan skriver
             //användaren ”Fyra” vilket inte är ett heltal och får då försöka igen.
-            //• Svara man Ja ska spelet starta om från början med ett helt nytt slumptal.Vid alla andra svar ställs frågan om man vill spela om igen. 
+             
             Random rnd = new Random();
+            var counter = 1;
+            var randomNumber = rnd.Next(0, 101);
             while (true)
-            {
-                var counter = 1;
-                var randomNumber = rnd.Next(0, 101);
+           { 
                 Console.WriteLine("Gissa ett tal mellan 1 och 100.");
-                Int32.TryParse(Console.ReadLine(), out var gissning);
                 
-                    if (gissning < randomNumber)
+                while (true)
+                {
+                    Int32.TryParse(Console.ReadLine(), out var gissning);
+                    if (gissning < 1 || gissning > 100)
+                    {
+                        Console.WriteLine("Skriv in ett tal mellan 1 och 100.");    
+                    }
+                    else if (gissning < randomNumber)
                     {
                         Console.WriteLine($"Gissning {counter} \nTalet är större");
                         counter++;
                         continue;
-                        
                     }
 
                     else if (gissning > randomNumber)
@@ -46,36 +50,38 @@ namespace Inlämning1_22_10_04
                         continue;
                     }
                     else if (gissning == randomNumber)
-                    {
-                        Console.WriteLine($"Gissning {counter} \nRätt! Du gissade rätt på {counter} försök.");
-                        
-                        Console.WriteLine("Vill du spela igen (Ja / Nej) ? ");
-                        string answer = Console.ReadLine();
-                        answer = answer.ToUpper();
-                        if (answer == "JA" || answer == "NEJ")
-                        {
-                        if (answer == "JA")
-                        {
-                            Console.WriteLine("Kör spelet igen...");
-                            counter = 1;
-                        }
-                        else if (answer == "NEJ")
-                        {
-                            Console.WriteLine("Tack för den här gången!");
-                            break;
-                        }
-                        }
-                        else
-                        {
-                        Console.WriteLine("Du kan bara välja ja eller nej. Försök igen!");
-                        }
-                    }
+                        break;
                     else
                     {
                         Console.WriteLine("Du kan bara skriva ett tal med siffror. Försök igen!");
                     }
-                
+                    
+                } Console.WriteLine($"Gissning {counter} \nRätt! Du gissade rätt på {counter} försök.");
+
+                    Console.WriteLine("Vill du spela igen (Ja / Nej) ? ");
+                    string answer = Console.ReadLine();
+                    answer = answer.ToUpper();
+                while (true)
+                {
+                    if (answer == "JA")
+                    {
+                        Console.WriteLine("Kör spelet igen...");
+                        counter = 1;
+                        randomNumber = rnd.Next(0, 101);
+                    }
+                    else if (answer == "NEJ")
+                        break;
+                    else
+                    { 
+                        Console.WriteLine("Du kan bara välja ja eller nej. Försök igen!");
+                    continue;
+                    }
+                }
+
             }
-        }
+            Console.WriteLine("Tack för den här gången!");
+            
+        }  
+           
     }
 }
