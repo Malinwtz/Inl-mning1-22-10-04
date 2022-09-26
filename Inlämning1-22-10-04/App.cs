@@ -13,67 +13,24 @@ namespace Inlämning1_22_10_04
 {
     internal class App
     {
-        public bool IsNumberCorrect( int numberToCompare, int correctNumber)
+        public string IsNumberCorrect( int numberToCompare, int correctNumber)
         {
-            int count = 1;
-            bool game = true; 
-            while (game)
-            {
-
-                if (numberToCompare < 1 || numberToCompare > 100)
-                {
-                    Console.WriteLine("Skriv in ett tal med siffror mellan 1 och 100.");
-                }
-                else if (numberToCompare < correctNumber)
-                {
-                    Console.WriteLine($"Gissning: {count} \nTalet är större");
-                    count++;
-                    continue;
-                }
-                else if (numberToCompare > correctNumber)
-                {
-                    Console.WriteLine($"Gissning: {count} \nTalet är mindre");
-                    count++;
-                    continue;
-                }
-                else if (numberToCompare == correctNumber)
-                    game = false;
-                else
-                {
-                    Console.WriteLine("Du kan bara skriva ett tal med siffror. Försök igen!");
-                }
-               
-            }
-            return true;
-
-            //if (numberToCompare == correctNumber)
-            //    return true;
-
-            //else if (numberToCompare < correctNumber)
-            //{
-            //    Console.WriteLine($"Talet är större");
-            //    return false;              
-            //}
-            //else if (numberToCompare > correctNumber)
-            //{
-            //    Console.WriteLine($"Talet är mindre");
-            //    return false;               
-            //}   
-            //else return false;
-
-
+            if (numberToCompare == correctNumber)
+                return "Talet är rätt.";
+            else if (numberToCompare < correctNumber)
+                return "Talet är större.";
+            else 
+                return "Talet är mindre.";
         }
         public void PlayAgain()
         {
             
         }
-        public bool IsNumber( int gissning)
+        public string IsNumberHigher( int numberToCompare, int correctNumber)
         {
-            if (gissning > 0 && gissning < 101)
-                return true;
-            else
-                return false;
-        
+            if (numberToCompare > correctNumber)
+                return "Talet är större.";
+            else return "Talet är mindre";
         }
         public int CreateARandomNumber()
         {
@@ -87,7 +44,7 @@ namespace Inlämning1_22_10_04
             var counter = 1;
             bool continueGame = true;
             int  randomNumber = CreateARandomNumber();
-            bool IsGuessCorrect;
+           // bool IsGuessCorrect;
 
             while (continueGame)
             {
@@ -102,36 +59,47 @@ namespace Inlämning1_22_10_04
                 while (continueGame)
                 {
                     Int32.TryParse(Console.ReadLine(), out var gissning);
+                    var answerGuessing = IsNumberCorrect(gissning, randomNumber); 
+
+
                     if (gissning < 1 || gissning > 100)
                     {
                         Console.WriteLine("Skriv in ett tal med siffror mellan 1 och 100.");
                     }
+
                     else if (gissning < randomNumber)
                     {
-                        Console.WriteLine($"Gissning: {counter} \nTalet är större");
+                        Console.WriteLine($"Gissning: {counter}. \n{answerGuessing}");
+                        
                         counter++;
                         continue;
                     }
+
                     else if (gissning > randomNumber)
                     {
-                        Console.WriteLine($"Gissning: {counter} \nTalet är mindre");
+                        Console.WriteLine($"Gissning: {counter} \n{answerGuessing}");
                         counter++;
                         continue;
                     }
+
                     else if (gissning == randomNumber)
+                    {
+                        Console.WriteLine($"Gissning: {counter} \n{answerGuessing} Du gissade rätt på {counter} försök.");
                         break;
+                    }
+
                     else
                     {
-                        Console.WriteLine("Du kan bara skriva ett tal med siffror. Försök igen!");
+                        Console.WriteLine($"{answerGuessing}");
                     }
 
                 }
-                Console.WriteLine($"Gissning: {counter} \nRätt! Du gissade rätt på {counter} försök.");
-                
+                //Console.WriteLine($"Gissning: {counter} \n{answerGuessing} Du gissade rätt på {counter} försök.");
+
 
                 while (continueGame)
                 {
-                    Console.WriteLine("vill du spela igen (ja / nej) ? ");
+                    Console.WriteLine("Vill du spela igen (ja / nej) ? ");
                     string answer = Console.ReadLine();
                     answer = answer.ToUpper();
                     
